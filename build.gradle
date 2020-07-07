@@ -1,0 +1,38 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'groovy'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
+}
+
+gradlePlugin {
+    plugins {
+        licensing {
+            id = 'com.github.deepy.licensing-report'
+            implementationClass = 'com.github.deepy.licensing.GradleLicensePlugin'
+        }
+    }
+}
+
+sourceSets {
+    functionalTest {
+    }
+}
+
+gradlePlugin.testSourceSets(sourceSets.functionalTest)
+configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
+
+tasks.register('functionalTest', Test) {
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
+}
+
+check {
+    dependsOn(tasks.functionalTest)
+}
