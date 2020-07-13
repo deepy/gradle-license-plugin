@@ -18,9 +18,6 @@ class LicenseReportTask extends DefaultTask {
     @Input
     String configuration
 
-    @OutputDirectory
-    File outDirectory
-
     @OutputFile
     File outFile
 
@@ -28,12 +25,8 @@ class LicenseReportTask extends DefaultTask {
     LicenseReportTask(String configuration) {
         this.configuration = configuration
 
-        outDirectory = project.file("$project.buildDir/licensing/$configuration")
-        outDirectory.mkdirs()
         outFile = project.file("build/reports/${configuration}LicenseReport.txt")
         outFile.parentFile.mkdirs()
-        outputs.dir(outDirectory)
-            .withPropertyName("${configuration}Poms")
     }
 
     @TaskAction

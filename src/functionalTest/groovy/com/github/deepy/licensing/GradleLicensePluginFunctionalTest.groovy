@@ -14,6 +14,8 @@ public class GradleLicensePluginFunctionalTest extends Specification {
                 id('com.github.deepy.licensing-report')
                 id('java')
             }
+
+	    project.tasks.register('licenseReport', LicenseReportTask, "runtimeClasspath")
         """
 
         when:
